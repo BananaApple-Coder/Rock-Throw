@@ -9,7 +9,8 @@ const Constraint=Matter.Constraint;
 var treeObj, stoneObj,groundObject;
 var mango1,mango2,mango3,mango4,mango5,mango6,mango7,mango8,mango9,mango10,mango11,mango12;
 var world,boy;
-
+var launcher
+var launcherForce = 100
 //Declare launcherObject and launchForce variable here
 
 
@@ -40,9 +41,10 @@ function setup() {
 	treeObj=new tree(1050,580);
 	groundObject=new ground(width/2,600,width,20);
   //create launcherObject here
+  launcher = new rope(stoneObj.body, {x:235, y:420})
 
 
-	Engine.run(engine);
+	Engine.run(engine)
 }
 
 function draw() {
@@ -66,7 +68,7 @@ function draw() {
   mango10.display();
   mango11.display();
   mango12.display();
-
+  launcher.display()
   stoneObj.display();
   groundObject.display();
   // display launcher object here
@@ -108,3 +110,17 @@ function draw() {
     }
 
   }
+
+  function mouseDragged(){
+    Matter.Body.setPosition(stoneObj.body, {x:mouseX, y:mouseY})
+}
+
+function mouseReleased(){
+    launcher.destroy()
+}
+
+function keyPressed(){
+  if(keyCode === 32){
+      launcher.attach(stoneObj.body);
+  }
+}
